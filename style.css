@@ -6424,7 +6424,7 @@ a {
         letter-spacing: 2px;
     }
 
-}/* =========================================
+}//* =========================================
    CHILDHOOD MEMORY — LUXURY PHOTO
 ========================================= */
 
@@ -6601,18 +6601,18 @@ a {
    MOBILE
 ========================================= */
 
-@media (max-width: 1700px) {
+@media (max-width: 700px) {
 
     .childhood-photo {
-        width: 512px;
+        width: 155px;
 
-        margin-top: 40px;
-        margin-bottom: 80px;
+        margin-top: 5px;
+        margin-bottom: 22px;
     }
 
     .photo-frame {
-        width: 380px;
-        height: 380px;
+        width: 140px;
+        height: 170px;
     }
 
     .photo-heart {
@@ -6620,9 +6620,9 @@ a {
         height: 26px;
 
         top: -10px;
-        right: 60px;
+        right: -10px;
 
-        font-size: 12px;
+        font-size: 9px;
     }
 
 }
