@@ -1571,7 +1571,7 @@ a {
   content: "";
   position: absolute;
   inset: 6px;
-  border: 1px solid rgba(175, 137, 78, 0.35);
+  border: 1px solid rgba(253, 152, 0, 0.35);
 }
 .crest-inner {
   width: 56px;
@@ -1627,7 +1627,7 @@ a {
   top: 43px;
   width: 190px;
   height: 90px;
-  border-top: 1px solid rgba(171, 133, 77, 0.65);
+  border-top: 1px solid rgba(141, 84, 0, 0.65);
   opacity: 0.8;
 }
 .couple-crest::before {
@@ -1641,9 +1641,7 @@ a {
   border-radius: 100% 0 0 0;
 }
 .couple-crest .crest-outer::before {
-  box-shadow:
-    -48px 20px 0 -1px rgba(171, 133, 77, 0.5),
-    48px 20px 0 -1px rgba(171, 133, 77, 0.5);
+  box-shadow: none;
 }
 .opening-content {
   width: min(90%, 700px);
@@ -2600,8 +2598,7 @@ svg {
   }
 
   .couple-crest {
-    transform: scale(0.82);
-    transform-origin: top center;
+transform: translateX(-50%) scale(0.82);    transform-origin: top center;
     top: 5% !important;
   }
 
@@ -2922,8 +2919,7 @@ svg {
   }
 
   .couple-crest {
-    transform: scale(0.72);
-    top: 3.5% !important;
+transform: translateX(-50%) scale(0.72);    top: 3.5% !important;
   }
 
   .hero {
