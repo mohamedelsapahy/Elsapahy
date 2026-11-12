@@ -2067,24 +2067,34 @@ a {
   box-shadow: 0 4px 10px rgba(80, 52, 30, 0.16);
   z-index: 10;
 }
+
 @media (max-width: 700px) {
   .childhood-photo {
-    width: 155px;
-    margin-top: 5px;
-    margin-bottom: 22px;
+    width: 230px;
+    margin: 8px auto 24px;
   }
+
   .photo-frame {
-    width: 380px;
-    height: 250px;
+    width: 200px;
+    height: 390px;
   }
+
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   .photo-heart {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     top: -10px;
-    right: 60px;
+    right: -12px;
     font-size: 12px;
   }
 }
+
 h1,
 h2,
 h3 {
