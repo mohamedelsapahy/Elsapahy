@@ -1,183 +1,127 @@
-/* ========================================
-   OPEN INVITATION
-======================================== */
 
-const openInvitation =
-    document.getElementById("openInvitation");
+/* Mohamed & Asmaa — invitation interactions */
 
-const openingScreen =
-    document.getElementById("openingScreen");
+document.addEventListener("DOMContentLoaded", () => {
 
+    const openingScreen = document.getElementById("openingScreen");
+    const openButton = document.getElementById("openInvitation");
 
-openInvitation.addEventListener(
-    "click",
-    () => {
+    // Reveal the invitation and start background music.
+    if (openingScreen && openButton) {
 
-        openingScreen.classList.add("hidden");
+        document.body.style.overflow = "hidden";
 
-        document.body.style.overflow = "auto";
+        openButton.addEventListener("click", () => {
 
+            openingScreen.classList.add("hide-opening");
+            document.body.classList.add("invitation-open");
+            document.body.style.overflow = "auto";
+
+            window.scrollTo(0, 0);
+
+            // Start background music.
+            const backgroundMusic = document.getElementById("backgroundMusic");
+
+            if (backgroundMusic) {
+                backgroundMusic.volume = 0.35;
+
+                backgroundMusic.play()
+                    .then(() => {
+                        console.log("Background music started successfully");
+                    })
+                    .catch((error) => {
+                        console.error("Music playback failed:", error);
+                    });
+            }
+
+            // Remove the opening screen after its fade-out.
+            window.setTimeout(() => {
+                openingScreen.hidden = true;
+            }, 850);
+
+        });
     }
-);
 
+    // Event date: December 9, 2026 at 7:00 PM.
+    const eventDate = new Date(2026, 11, 9, 19, 0, 0).getTime();
 
-/* ========================================
-   INITIAL PAGE STATE
-======================================== */
+    const countdownFields = {
+        days: document.getElementById("days"),
+        hours: document.getElementById("hours"),
+        minutes: document.getElementById("minutes"),
+        seconds: document.getElementById("seconds"),
+    };
 
-document.body.style.overflow = "hidden";
+    const hasCountdown = Object.values(countdownFields).every(Boolean);
 
+    if (hasCountdown) {
 
-/* ========================================
-   COUNTDOWN
-======================================== */
+        let countdownTimer;
 
-/*
-   Event:
-   December 1, 2026
-   8:30 PM
-*/
+        const updateCountdown = () => {
 
-const eventDate =
-    new Date(
-        "December 1, 2026 20:30:00"
-    ).getTime();
+            const remaining = eventDate - Date.now();
 
+            if (remaining <= 0) {
 
-const countdown = setInterval(
-    () => {
+                Object.values(countdownFields).forEach((field) => {
+                    field.textContent = "00";
+                });
 
-        const now =
-            new Date().getTime();
+                window.clearInterval(countdownTimer);
+                return;
+            }
 
+            const values = {
+                days: Math.floor(remaining / 86400000),
+                hours: Math.floor((remaining % 86400000) / 3600000),
+                minutes: Math.floor((remaining % 3600000) / 60000),
+                seconds: Math.floor((remaining % 60000) / 1000),
+            };
 
-        const distance =
-            eventDate - now;
+            Object.entries(values).forEach(([unit, value]) => {
+                countdownFields[unit].textContent =
+                    String(value).padStart(2, "0");
+            });
 
+        };
 
-        /* Event has started */
+        updateCountdown();
 
-        if (distance <= 0) {
+        countdownTimer = window.setInterval(updateCountdown, 1000);
+    }
 
-            clearInterval(countdown);
+    // Reveal story cards as they enter the viewport.
+    const timelineItems = document.querySelectorAll(".timeline-item");
 
-            document.getElementById("days")
-                .textContent = "00";
+    if ("IntersectionObserver" in window && timelineItems.length) {
 
-            document.getElementById("hours")
-                .textContent = "00";
+        const storyObserver = new IntersectionObserver(
+            (entries, observer) => {
 
-            document.getElementById("minutes")
-                .textContent = "00";
+                entries.forEach((entry) => {
 
-            document.getElementById("seconds")
-                .textContent = "00";
-
-            return;
-
-        }
-
-
-        const days =
-            Math.floor(
-                distance /
-                (1000 * 60 * 60 * 24)
-            );
-
-
-        const hours =
-            Math.floor(
-                (distance %
-                    (1000 * 60 * 60 * 24)) /
-                (1000 * 60 * 60)
-            );
-
-
-        const minutes =
-            Math.floor(
-                (distance %
-                    (1000 * 60 * 60)) /
-                (1000 * 60)
-            );
-
-
-        const seconds =
-            Math.floor(
-                (distance %
-                    (1000 * 60)) /
-                1000
-            );
-
-
-        document.getElementById("days")
-            .textContent =
-            String(days).padStart(2, "0");
-
-
-        document.getElementById("hours")
-            .textContent =
-            String(hours).padStart(2, "0");
-
-
-        document.getElementById("minutes")
-            .textContent =
-            String(minutes).padStart(2, "0");
-
-
-        document.getElementById("seconds")
-            .textContent =
-            String(seconds).padStart(2, "0");
-
-
-    },
-    1000
-);
-
-
-/* ========================================
-   OUR STORY SCROLL ANIMATION
-======================================== */
-
-const timelineItems =
-    document.querySelectorAll(
-        ".timeline-item"
-    );
-
-
-const storyObserver =
-    new IntersectionObserver(
-
-        (entries) => {
-
-            entries.forEach(
-                (entry) => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        entry.target
-                            .classList
-                            .add("visible");
-
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
                     }
 
-                }
-            );
+                });
 
-        },
+            },
+            { threshold: 0.2 }
+        );
 
-        {
-            threshold: 0.2
-        }
+        timelineItems.forEach((item) => {
+            storyObserver.observe(item);
+        });
 
-    );
+    } else {
 
-
-timelineItems.forEach(
-    (item) => {
-
-        storyObserver.observe(item);
+        timelineItems.forEach((item) => {
+            item.classList.add("visible");
+        });
 
     }
-);
+
+});
