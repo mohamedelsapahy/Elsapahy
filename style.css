@@ -2030,7 +2030,7 @@ a {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: grayscale(100%) contrast(0.96) brightness(1.03);
+filter: none;
   position: relative;
   z-index: 1;
 }
